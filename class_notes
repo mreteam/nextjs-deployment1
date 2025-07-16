@@ -1,0 +1,90 @@
+
+What is Deployment ?
+-----------------------
+Deployment in the context of web development is the process of taking your application’s code and making it available to users on the internet
+DEV, QA, PROD environments will be maintained as part of deployment process
+
+
+Why Deployment is needed?
+-----------------------
+Accessibility- Deployment publishes your app to a public URL so customers, teammates, or the world can use it 
+Reliability & Scaling- with cloud infrastructure multiple machines, load-balancing, caching, monitoring to handle  real world traffic and keeping the app online
+Security- Managed platforms handle SSL certificates (HTTPS), DDoS protection, environment-variable isolation, and OS-level patching, so you don’t have to
+Performance - Deploying behind a CDN (Content Delivery Network) or edge infrastructure ensures that static assets and server-rendered pages are delivered from the PoP nearest the user, dramatically speeding up load times.
+Automated pipelines let you push to a branch (e.g. main) and instantly deploy a new version—reducing manual toil and human error.
+
+
+What are the core steps involved in Deployment 
+--------------------------------------
+1. Build -Transpile, bundle, and optimize your code  (next build) Generate static assets (JS/CSS/images) and server-rendered entrypoints.
+2. upload - Copy build output to servers or object storage (e.g. push .next to Vercel, or container image to Docker registry)
+3. Provision Runtime - Start server processes (Node.js), serverless functions (AWS Lambda), or containers (Docker/Kubernetes).
+4. Configure Network - Set up DNS to point your domain to the new deployment.Configure load-balancers, SSL certificates, and CDN rules.
+5. Monitor and Verify  - Smoke-test critical paths (homepage, login form), Monitor logs, metrics (response times, error rates)
+
+
+Type of deployment 
+-----------------------
+Static Hosting - Only static files (HTML/CSS/JS). No server-rendering.
+Serverless Functions - Individual API endpoints or SSR pages run on demand.
+Container (Docker) -  Your app and its environment packaged as a container image.
+Virtual Machines - Full VMs you manage
+Kubernetes   - Orchestrated containers with auto-scaling, self-healing.
+Managed PaaS  - Platform-as-a-Service like Vercel, Heroku, Netlify.
+
+
+Deployment in Next js context 
+-------------------------------
+Static Pages (next export or SSG): Published as plain HTML/CSS/JS to a CDN.
+SSR Pages: Deployed as serverless functions or containers; each incoming request runs your React code to generate HTML.
+ISR (Incremental Static Regeneration): Hybrid—static pages re-built on the fly at configured intervals
+
+
+In short, deployment bridges the gap between “it works on my machine” and “it’s live for real users,” and is essential for delivering a secure, performant, and reliable web application.
+
+
+What is Vercel?
+
+Vercel is a cloud platform purpose-built for front-end frameworks (especially Next.js) and static sites. It handles everything from build and deployment to global CDN distribution, edge functions, and previews. Basicallly we can deploy the app or ship the app without managing infrastructure.
+
+Founded by the Next.js team (formerly Zeit), Vercel’s mission is to make the front end a first-class citizen of the web.JAMstack-friendly: Optimized for JavaScript, APIs, and Markup.Serverless & Edge-first: Automatic serverless Function spin-up (AWS Lambda under the hood) and Edge Functions for extremely low-latency responses.
+
+
+Vercel Key concepts and Features
+------------------------------------
+1. Git Integration  - Connect GitHub / GitLab / Bitbucket. Every push → automatic build & deploy.
+2. Preview Deployments - For each PR/branch, Vercel spins up a unique “Preview URL” so teams can review changes live.
+3. Production Domains  - Assign custom domains (e.g. www.myapp.com) and configure SSL, redirects, headers.
+4. Environment Variables - managed secrets via the Dashboard or CLI.
+5. Global CDN - 	Vercel caches all static assets and SSR pages at edge PoPs
+6. Serverless Functions - Write API routes as files (e.g. api/hello.js), deployed as zero-config AWS Lambda funcs.
+7. Edge functions - Deploy functions to V8 isolates at the CDN edge for sub-10ms cold starts.
+8. Incremental Static Regeneration (ISR) - Re-generate pages on demand, at runtime intervals you define.
+9. Analytics - Out-of-the-box real-user metrics (LCP, FID) without adding external scripts.
+10. Monorepo Support - Works seamlessly with Yarn/NPM workspaces.
+
+
+can we manage to deploy a Next js app without vercel?
+
+yes we can but we need manage the following.
+
+1. Server & Runtime Management - Maintaining a Node server , Process orchestration and version compatibility
+
+2. SSR, ISR & Caching  - in vercel we havce support but since we are moving out we have to create our own logic configuring cache-controls, Purge APIs, TTLs, and fallbacks manually. Serverless cold starts- If you deploy SSR to AWS Lambda, Cloud Run, or Azure Functions, your “cold” invocation latency can be high. Vercel’s edge network is optimized for this automatically.Global CDN configuration 
+You’ll need to wire up your own CDN (CloudFront, Cloudflare, Azure CDN) to sit in front of your SSR or static assets, tune cache invalidation on each deploy, and handle path rewrites.
+
+3. API Routes & Edge Middleware 
+platform support gaps - Not every host supports Next.js edge-middleware or the Node.js UDP/TCP APIs behind your API routes. You may need to degrade to pure server-side functions or adapt code to the provider’s sandbox.
+
+4. Build & Deploy Pipeline Complexity
+Custom CI/CD scripting Without Vercel’s Git-push → build → deploy workflow, you must configure your own pipeline (GitHub Actions, Azure Pipelines, GitLab CI). That includes build caching, secret management, and rollback strategies
+Artifact management Deciding whether to ship the full .next folder, or rebuild on each deploy, managing build-time dependencies, and ensuring consistency across environments.
+
+
+Deploying off-Vercel gives you flexibility and potential cost control, but you inherit the full burden of following
+Server/runtime maintenance
+CI/CD orchestration
+Global caching & revalidation
+Monitoring, logging & security
+
+if you have a good Dev ops background then only its recommended without vercl
