@@ -98,8 +98,18 @@ Pre requesite - We need Github account  and Vercel account
 2. git clone <url of githubrepo> it to local folder in the local system 
 3. update or create necessary files 
 4. verify the branch and origin 
+        git add   or via vs code add the staging changes
+        git commit or via vs code add the commit message
+        git pull origin or via vs code github plugin
 5. git push origin 
         manage the credentials and push the code to main /develop /feature branch 
 
 6. login to vercel account and connect to github
 7. import the github repo which are going to deploy
+    
+8. we can adjust the setting inside the vercel for build configuration and also keep any enviroment variables
+
+9. vercel will deploy the application if its first deployment it will not have previews but later push will showcase deployments
+
+10. we can see overview , performance insights , change domains etc with vercel as mentoned in features
+
