@@ -87,4 +87,19 @@ CI/CD orchestration
 Global caching & revalidation
 Monitoring, logging & security
 
-if you have a good Dev ops background then only its recommended without vercl
+if you have a good Dev ops background then only its recommended without vercel
+
+
+Sample deployment steps
+------------------------------
+Pre requesite - We need Github account  and Vercel account
+
+1. we are creating a repo - nextjs-deployment1
+2. git clone <url of githubrepo> it to local folder in the local system 
+3. update or create necessary files 
+4. verify the branch and origin 
+5. git push origin 
+        manage the credentials and push the code to main /develop /feature branch 
+
+6. login to vercel account and connect to github
+7. import the github repo which are going to deploy
